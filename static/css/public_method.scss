@@ -1,0 +1,37 @@
+/*
+   * 方法作用:上下左右居中
+   * @param $w 容器的宽
+   * @param $h 容器的高
+   * @param $padding 容器的padding
+   * @param $radius 容器的圆角
+   * @param $border 容器的边框
+ */
+@mixin positionCenter($w,$h,$padding:0px,$radius:0,$border:none) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: $w;
+  height: $h;
+  margin-top: -$h/2-$padding;
+  margin-left: -$w/2-$padding;
+  padding: $padding;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+  border:$border;
+}
+
+/*
+   * 方法作用:设置元素宽高圆角背景色
+   * @param $leftTop 左上
+   * @param $rightTop 右上
+   * @param $leftBottom 左下
+   * @param $rightBottom 右下
+ */
+@mixin divStyle($w:auto,$h:auto,$background:#fff,$border:none,$radius:0) {
+  width: $w;
+  height: $h;
+  background:$background;
+  border-radius: $radius;
+  border:$border;
+}
