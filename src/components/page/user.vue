@@ -139,7 +139,7 @@
       }
     },
     created: function () {
-      var self = this;
+      const self = this;
       this.$store.dispatch('reset');
       this.menuButton = this.getMenuButton();
       self.getData(this.$store.state.pageNo);
