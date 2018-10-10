@@ -3,19 +3,15 @@ import axios from 'axios'
 import {Message , Loading} from 'element-ui';
 import qs from 'qs'
 
-/*if (process.env.NODE_ENV == 'development') {
-  axiosIns.defaults.baseURL =process.env.API_ROOT;
-} else if (process.env.NODE_ENV == 'debug') {
-  axiosIns.defaults.baseURL = process.env.API_ROOT;
-} else if (process.env.NODE_ENV == 'production') {
-  axiosIns.defaults.baseURL = process.env.API_ROOT;
-}*/
-
 let axiosIns = axios.create({});
 let loading;//定义loading变量
 let needLoadingRequestCount = 0;
 let ajaxMethod = ['get', 'post', 'put', 'delete'];
 let api = {};
+/**
+ * 设置默认请求路径
+ */
+axiosIns.defaults.baseURL =process.env.API_ROOT;
 
 /**
  * 开始
