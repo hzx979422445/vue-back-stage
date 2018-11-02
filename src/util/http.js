@@ -68,10 +68,6 @@ axiosIns.interceptors.request.use(function (config) {
     config.headers['OrderBy'] = config['OrderBy'];
     config.headers['Dir'] = config['Dir'];
   }
-  // let token = Vue.localStorage.get('token');
-  // if(token){
-  //     config.headers.Token = token;
-  // }
   showFullScreenLoading();
   return config;
 });
