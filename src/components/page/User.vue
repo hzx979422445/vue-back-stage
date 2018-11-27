@@ -54,11 +54,11 @@
       :before-close="closeDialog"
     >
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
-        <el-form-item label="账号" prop="username" :rules="filter_rules({required:true,type:'regexn'})">
-          <el-input v-model="ruleForm.username" auto-complete="off"></el-input>
+        <el-form-item label="账号" prop="username" :rules="filter_rules({required:'请输入账号',type:'regexn'})">
+          <el-input v-model="ruleForm.username" auto-complete="off" placeholder="请输入账号"></el-input>
         </el-form-item>
-        <el-form-item  label="密码" prop="password" :rules="filter_rules({required:true,type:'regexn'})" v-if="showPassInput">
-          <el-input type="password" v-model="ruleForm.password" auto-complete="off"></el-input>
+        <el-form-item  label="密码" prop="password" :rules="filter_rules({required:'请输入密码',type:'regexn'})" v-if="showPassInput">
+          <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item label="性别" prop="sex" :rules="filter_rules({required:true})">
           <el-radio v-model="ruleForm.sex" label="1">男</el-radio>

@@ -92,8 +92,9 @@ exports.install = function (Vue, options) {
    * */
   Vue.prototype.filter_rules = function (item) {
     let rules = [];
+    console.log(item)
     if (item.required) {
-      rules.push({required: true, message: '该输入项为必填项!'});
+      rules.push({required: true, message: item.required});
     }
     if (item.maxLength) {
       rules.push({min: 1, max: item.maxLength, message: '最多输入' + item.maxLength + '个字符!', trigger: 'blur'})

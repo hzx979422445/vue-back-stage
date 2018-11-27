@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import {Message , Loading} from 'element-ui';
+import {Message, Loading} from 'element-ui';
 import qs from 'qs'
 
 let axiosIns = axios.create({});
@@ -11,7 +11,7 @@ let api = {};
 /**
  * 设置默认请求路径
  */
-axiosIns.defaults.baseURL =process.env.API_ROOT;
+axiosIns.defaults.baseURL = process.env.API_ROOT;
 
 /**
  * 开始
@@ -23,6 +23,7 @@ function startLoading() {
     background: 'rgba(0, 0, 0, 0.7)'
   })
 }
+
 /**
  * 结束
  */
@@ -31,7 +32,7 @@ function endLoading() {
 }
 
 /**
- *
+ *打开loading
  */
 export function showFullScreenLoading() {
   if (needLoadingRequestCount === 0) {
@@ -39,8 +40,9 @@ export function showFullScreenLoading() {
   }
   needLoadingRequestCount++;
 }
+
 /**
- *
+ *关闭loading
  */
 export function tryHideFullScreenLoading() {
   if (needLoadingRequestCount <= 0) return
@@ -49,33 +51,45 @@ export function tryHideFullScreenLoading() {
     endLoading()
   }
 }
+
 axiosIns.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest';
 axiosIns.defaults.headers.get['X-Requested-With'] = 'XMLHttpRequest';
 axiosIns.defaults.responseType = 'json';
-axiosIns.defaults.transformRequest = [function (data) {
-  return JSON.stringify(data);
-}];
 
 /**
  * 添加请求拦截器
  */
-axiosIns.interceptors.request.use(function (config) {
-  config.headers.Accept = '* ';
-  config.headers['Content-Type'] = 'application/json;charset=UTF-8;';
-  if (config['Page-Number'] != undefined) {
-    config.headers['Page-Number'] = config['Page-Number'];
-    config.headers['Page-Size'] = config['Page-Size'];
-    config.headers['OrderBy'] = config['OrderBy'];
-    config.headers['Dir'] = config['Dir'];
+axiosIns.interceptors.request.use(
+  (config) => {
+    config.headers.Accept = '* ';
+    config.headers['Content-Type'] = 'application/json;charset=UTF-8;';
+    if (config['Page-Number'] != undefined) {
+      config.headers['Page-Number'] = config['Page-Number'];
+      config.headers['Page-Size'] = config['Page-Size'];
+      config.headers['OrderBy'] = config['OrderBy'];
+      config.headers['Dir'] = config['Dir'];
+    }
+    if (config['Content-Type']) {
+      config.headers['Content-Type'] = config['Content-Type'];
+    }
+    if (config['formData']) {
+      qs.stringify(config.data);
+    } else {
+      JSON.stringify(config.data);
+    }
+    showFullScreenLoading();
+    return config;
+  }, (error) => {
+    Message('请求异常,无法访问服务器');
+    tryHideFullScreenLoading();
+    return Promise.reject(error);
   }
-  showFullScreenLoading();
-  return config;
-});
+);
 /**
  * 添加一个响应拦截器
  */
 axiosIns.interceptors.response.use(
-  function (response) {
+   (response) => {
     if (response.headers != undefined) {
       let pageCount = response.headers['page-count'];
       if (pageCount != undefined) {
@@ -96,8 +110,12 @@ axiosIns.interceptors.response.use(
       Message('请求异常');
     }
   },
-  function (error) {
-    return Promise.reject(error);
+   (error) => {
+     setTimeout(()=>{
+       Message('请求异常,无法访问服务器');
+       tryHideFullScreenLoading();
+       return Promise.reject(error);
+     },2000);
   }
 );
 /**

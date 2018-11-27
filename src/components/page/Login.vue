@@ -3,12 +3,12 @@
     <div class="ms-title">后台管理系统</div>
     <div class="ms-login">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
-        <el-form-item prop="username">
-          <el-input v-model="ruleForm.username" placeholder="username" @keyup.enter.native="submitForm('ruleForm')"
-                    autoComplete="off"></el-input>
+        <el-form-item prop="username" :rules="filter_rules({required:'请输入用户名'})">
+          <el-input v-model="ruleForm.username" placeholder="请输入用户名" @keyup.enter.native="submitForm('ruleForm')"
+                    autoComplete="off" ></el-input>
         </el-form-item>
-        <el-form-item prop="password">
-          <el-input type="password" placeholder="password" v-model="ruleForm.password"
+        <el-form-item prop="password" :rules="filter_rules({required:'请输入密码'})">
+          <el-input type="password" placeholder="请输入密码" v-model="ruleForm.password"
                     @keyup.enter.native="submitForm('ruleForm')" autoComplete="off"></el-input>
         </el-form-item>
         <div class="login-btn">
@@ -30,14 +30,7 @@
           username: '',
           password: ''
         },
-        rules: {
-          username: [
-            {required: true, message: '请输入用户名', trigger: 'blur'}
-          ],
-          password: [
-            {required: true, message: '请输入密码', trigger: 'blur'}
-          ]
-        }
+        rules: {}
       }
     },
     methods: {
