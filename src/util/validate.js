@@ -92,7 +92,6 @@ exports.install = function (Vue, options) {
    * */
   Vue.prototype.filter_rules = function (item) {
     let rules = [];
-    console.log(item)
     if (item.required) {
       rules.push({required: true, message: item.required});
     }
