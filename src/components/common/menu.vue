@@ -3,16 +3,19 @@
     <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" theme="dark" unique-opened router>
       <template v-for="item in menu">
         <template v-if="item.listchild.length > 0">
-          <el-submenu :index="item.url">
-            <template slot="title"><i :class="item.icon"></i>{{ item.name }}</template>
-            <el-menu-item v-for="(subItem,i) in item.listchild" :key="i" :index="subItem.url" @click="addTab(subItem)">{{
-              subItem.name }}
+          <el-submenu :index="item.url" :key='item.id'>
+            <template slot="title"><i :class="item.icon"></i>
+            <span slot="title">{{item.name}}</span>
+            </template>
+            <el-menu-item v-for="(subItem,i) in item.listchild" :key="i" :index="subItem.url"  @click="addTab(subItem)">
+              {{subItem.name}}
             </el-menu-item>
           </el-submenu>
         </template>
         <template v-else>
-          <el-menu-item :index="item.url" @click="addTab(item)">
-            <i :class="item.icon"></i>{{ item.name }}
+          <el-menu-item :index="item.url" :key='item.id' @click="addTab(item)">
+            <i :class="item.icon"></i>
+             <span slot="title">{{ item.name }}</span>
           </el-menu-item>
         </template>
       </template>
